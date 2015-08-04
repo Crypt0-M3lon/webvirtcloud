@@ -19,3 +19,6 @@ class groupAddForm(forms.Form):
         except Group.DoesNotExist:
             return name
         raise forms.ValidationError(_('This group already exist'))
+
+class groupInstanceAddForm(forms.Form):
+    instance_id = forms.Integer
