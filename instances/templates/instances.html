@@ -247,7 +247,7 @@
     <script>
         function goto_compute() {
             var compute = $("#compute_select").val();
-            window.location = "{% url 'index' %}"+ "compute/" + "/create/";
+            window.location = "{% url 'index' %}"+ "compute/" + compute + "/create/";
         }
     </script>
 {% endif %}
