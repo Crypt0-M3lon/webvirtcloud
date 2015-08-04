@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Computes" %}{% endblock %}
+{% block content %}
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    {% include 'create_group_block.html' %}
+                    <h1 class="page-header">{% trans "Groups" %}</h1>
+                </div>
+            </div>
+            <!-- /.row -->
+
+            {% include 'errors_block.html' %}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped sortable-theme-bootstrap" data-sortable>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Instances</th>
+                                        </tr>
+                                    </thead>
+
+                            <tbody class="searchable">
+                            {% for group in groups %}
+                            <tr>
+                                <td>{{ group }}</a></td>
+                                <td>None</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+{% endblock %}

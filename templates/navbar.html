@@ -27,6 +27,9 @@
                     <li {% class_active request "^/log" %}>
                         <a href="{% url 'showlogs' %}"><i class="fa fa-fw fa-list-alt"></i> {% trans "Logs" %}</a>
                     </li>
+                    <li {% class_active request "^/group" %}>
+                        <a href="{% url 'groups' %}"><i class="fa fa-fw fa-list-alt"></i> {% trans "Groups" %}</a>
+                    </li>
                 {% endif %}
               </ul>
               <ul class="nav navbar-nav navbar-right">
