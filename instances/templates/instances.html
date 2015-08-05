@@ -32,7 +32,7 @@
                                     <div class="col-lg-12">
                                         <div class="alert alert-warning alert-dismissable">
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                            <i class="fa fa-exclamation-triangle"></i> <strong>{% trans "Warning:" %}</strong> {% trans "You don't have any Instace" %}
+                                            <i class="fa fa-exclamation-triangle"></i> <strong>{% trans "Warning:" %}</strong> {% trans "You don't have any Instance" %}
                                         </div>
                                     </div>
                                 {% else %}
@@ -49,8 +49,8 @@
                                             </tr>
                                         </thead>
                                         <tbody class="searchable">
-                                            {% for host, inst  in all_host_vms.items %}
-                                                {% for vm, info in inst.items %}
+                                            {% for host, inst  in all_host_vms_bis.items %}
+                                                {% for vm, info in inst %}
                                                     <tr>
                                                         <td><a href="{% url 'instance' host.0 vm %}">{{ vm }}</a></td>
                                                         <td><a href="{% url 'overview' host.0 %}">{{ host.1 }}</a></td>
@@ -123,7 +123,7 @@
                                                             </form>
                                                         </td>
                                                         <td>
-                                                            {{ info.group }}
+                                                            {{ vm.group }}
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -148,6 +148,7 @@
                                                 <th>VCPU</th>
                                                 <th>Memory</th>
                                                 <th data-sortable="false" style="width: 165px;">Actions</th>
+                                                <th>Group</th>
                                             </tr>
                                         </thead>
                                         <tbody class="searchable">
@@ -212,6 +213,9 @@
                                                                 </a>
                                                             {% endifequal %}
                                                         </form>
+                                                    </td>
+                                                    <td>
+                                                        {{ info.group }}
                                                     </td>
                                                 </tr>
                                             {% endfor %}

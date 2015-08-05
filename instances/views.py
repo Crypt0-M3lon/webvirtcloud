@@ -43,6 +43,7 @@ def instances(request):
 
     error_messages = []
     all_host_vms = {}
+    all_host_vms_bis = {}
     all_user_vms = {}
     computes = Compute.objects.all()
 
@@ -64,7 +65,8 @@ def instances(request):
                     conn = wvmHostDetails(comp, comp.login, comp.password, comp.type)
                     if conn.get_host_instances():
                         all_host_vms[comp.id, comp.name] = conn.get_host_instances()
-                        for vm, info in conn.get_host_instances().items():
+                        all_host_vms_bis[comp.id, comp.name] = []
+                        for vm, info in all_host_vms[comp.id, comp.name].items():
                             try:
                                 check_uuid = Instance.objects.get(compute_id=comp.id, name=vm)
                                 if check_uuid.uuid != info['uuid']:
@@ -72,10 +74,10 @@ def instances(request):
                             except Instance.DoesNotExist:
                                 check_uuid = Instance(compute_id=comp.id, name=vm, uuid=info['uuid'])
                                 check_uuid.save()
+                            all_host_vms_bis[comp.id, comp.name].append((Instance.objects.get(compute_id=comp.id, name=vm), info))
                     conn.close()
                 except libvirtError as lib_err:
                     error_messages.append(lib_err)
-
     if request.method == 'POST':
         name = request.POST.get('name', '')
         compute_id = request.POST.get('compute_id', '')

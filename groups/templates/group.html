@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     {% include 'add_group_block.html' with instances=instances %}
-                    <h1 class="page-header">{% trans "Group" %}</h1>
+                    <h1 class="page-header">{% trans "Group" %} {{group.name}}</h1>
                 </div>
             </div>
             <!-- /.row -->
@@ -25,10 +25,10 @@
                                     </thead>
 
                             <tbody class="searchable">
-                            {% for group_instance in group_instances %}
+                            {% for instance in group_instances %}
                             <tr>
-                                <td><a href="{% url 'group' group.id %}">{{ group_instance.name }}</a></td>
-                                <td>None</td>
+                                <td><a href="{% url 'instance' instance.compute.id instance %}">{{ instance }}</a></td>
+                                <td>FIXME</td>
                             </tr>
                             {% endfor %}
                             </tbody>

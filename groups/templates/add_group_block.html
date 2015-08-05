@@ -17,9 +17,9 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">{% trans "Name" %}</label>
                             <div class="col-sm-6">
-                                <select class="form-control" id="instance">
-                                {% for instance in instances %}
-                                    <option value="instance.id">{{instance}}</option>
+                                <select class="form-control" id="instance" name="instance_id">
+                                {% for instance in available_instances %}
+                                    <option value="{{instance.id}}">{{instance}}</option>
                                 {% endfor %}
                                 </select>
                             </div>

@@ -21,4 +21,6 @@ class groupAddForm(forms.Form):
         raise forms.ValidationError(_('This group already exist'))
 
 class groupInstanceAddForm(forms.Form):
-    instance_id = forms.Integer
+    instance_id = forms.CharField(max_length=20)
+
+

@@ -24,10 +24,14 @@
                                     </thead>
 
                             <tbody class="searchable">
-                            {% for group in groups %}
+                            {% for group, instances in groups_inst %}
                             <tr>
                                 <td><a href="{% url 'group' group.id %}">{{ group }}</a></td>
-                                <td>None</td>
+                                <td>
+                                    {% for inst in instances %}
+                                        {{inst}}</br>
+                                    {% endfor %}
+                                </td>
                             </tr>
                             {% endfor %}
                             </tbody>
