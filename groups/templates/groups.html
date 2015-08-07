@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}{% trans "Computes" %}{% endblock %}
+{% block title %}{% trans "Groups" %}{% endblock %}
 {% block content %}
             <!-- Page Heading -->
             <div class="row">
@@ -26,10 +26,10 @@
                             <tbody class="searchable">
                             {% for group, instances in groups_inst %}
                             <tr>
-                                <td><a href="{% url 'group' group.id %}">{{ group }}</a></td>
+                                <td style="vertical-align: middle;"><a href="{% url 'group' group.id %}">{{ group }}</a></td>
                                 <td>
                                     {% for inst in instances %}
-                                        {{inst}}</br>
+                                        <a href="{% url 'instance' inst.compute.id inst %}">{{ inst }}</a></br>
                                     {% endfor %}
                                 </td>
                             </tr>

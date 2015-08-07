@@ -21,6 +21,7 @@
                                         <tr>
                                             <th>Instance</th>
                                             <th>Actions</th>
+                                            <th class="col-md-3 text-center">Delete from group</th>
                                         </tr>
                                     </thead>
 
@@ -29,6 +30,7 @@
                             <tr>
                                 <td><a href="{% url 'instance' instance.compute.id instance %}">{{ instance }}</a></td>
                                 <td>FIXME</td>
+                                <td><a href="{% url 'deleteFromGroup' group.id instance.id %}"><span class="btn btn-sm btn-default glyphicon glyphicon-remove center-block"></span></a></td>
                             </tr>
                             {% endfor %}
                             </tbody>

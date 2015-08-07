@@ -2,7 +2,7 @@ import time
 import json
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from groups.models import Group
 from instances.models import Instance
 from accounts.models import UserInstance
@@ -35,10 +35,10 @@ def groups(request):
              for msg_err in form.errors.values():
                     error_messages.append(msg_err.as_text())
 
-    groups = Group.objects.all()
+    groups = Group.objects.all().order_by('name')
     groups_inst = []
     for group in groups:
-        groups_inst.append((group, Instance.objects.filter(group=group)))
+        groups_inst.append((group, Instance.objects.filter(group=group).order_by('name')))
     return render(request, 'groups.html', locals())
 
 def editGroup(request, group_id):
@@ -66,12 +66,27 @@ def editGroup(request, group_id):
                     error_messages.append(msg_err.as_text())
 
     group = get_object_or_404(Group, pk=group_id)
-    available_instances = Instance.objects.exclude(group=group)
+    available_instances = Instance.objects.filter(group=None).order_by('name')
     group_instances= []
     try:
-        group_instances = Instance.objects.filter(group=group)
+        group_instances = Instance.objects.filter(group=group).order_by('name')
     except:
         pass
 
 
     return render(request, 'group.html', locals())
+
+def deleteFromGroup(request, group_id, instance_id):
+    """
+    :param request:
+    :return:
+    """
+    if not request.user.is_authenticated():
+       return HttpResponseRedirect(reverse('index'))
+    if not request.user.is_superuser:
+       return HttpResponseRedirect(reverse('index'))
+    error_messages = []
+    instance = get_object_or_404(Instance, pk=instance_id)
+    instance.group = None
+    instance.save()
+    return redirect('group', group_id=group_id)

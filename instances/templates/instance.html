@@ -6,8 +6,8 @@
                  <div class="row">
                     <table>
                         <tr>
-                            <td><h3>{{ vname }}</h3></td>
-                            <td>
+                            <td><h3>{{ vname }}{% if instance.group %} ({{instance.group}}){% endif %}&nbsp;</h3></td>
+                            <td class="text-center" >
                                 {% ifequal status 5 %}
                                    <span class="label label-danger">{% trans "Off" %}</span>
                                 {% endifequal %}
