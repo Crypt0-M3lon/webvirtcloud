@@ -8,7 +8,7 @@ from instances.models import Instance
 from accounts.models import UserInstance
 from libvirt import libvirtError
 from groups.forms import groupAddForm, groupInstanceAddForm
-
+from vrtManager.instance import wvmInstance, wvmInstances
 
 def groups(request):
     """
@@ -67,12 +67,22 @@ def editGroup(request, group_id):
 
     group = get_object_or_404(Group, pk=group_id)
     available_instances = Instance.objects.filter(group=None).order_by('name')
-    group_instances= []
+    group_instances = []
     try:
         group_instances = Instance.objects.filter(group=group).order_by('name')
     except:
         pass
+    group_instances_status = []
+    # get status for each instances of the group
+    for instance in group_instances:
+        conn = wvmInstance(instance.compute.hostname,
+                           instance.compute.login,
+                           instance.compute.password,
+                           instance.compute.type,
+                           instance.name)
 
+        status = conn.get_status()
+        group_instances_status.append((instance,status))
 
     return render(request, 'group.html', locals())
 
@@ -89,4 +99,31 @@ def deleteFromGroup(request, group_id, instance_id):
     instance = get_object_or_404(Instance, pk=instance_id)
     instance.group = None
     instance.save()
+    return redirect('group', group_id=group_id)
+
+
+def powerGroupInstance(request, group_id):
+
+    if not request.user.is_authenticated():
+       return HttpResponseRedirect(reverse('index'))
+    if not request.user.is_superuser:
+       return HttpResponseRedirect(reverse('index'))
+
+    group = get_object_or_404(Group, pk=group_id)
+
+    msg = ("Power On Group")
+    try:
+        group_instances = Instance.objects.filter(group=group).order_by('name')
+    except:
+        pass
+    group_instances_status = []
+    # get status for each instances of the group
+    for instance in group_instances:
+        conn = wvmInstance(instance.compute.hostname,
+                           instance.compute.login,
+                           instance.compute.password,
+                           instance.compute.type,
+                           instance.name)
+        if conn.get_status() != 1:
+            conn.start()
     return redirect('group', group_id=group_id)

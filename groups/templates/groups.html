@@ -16,12 +16,13 @@
                 <div class="col-lg-12">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped sortable-theme-bootstrap" data-sortable>
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Instances</th>
-                                        </tr>
-                                    </thead>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Instances</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 
                             <tbody class="searchable">
                             {% for group, instances in groups_inst %}
@@ -31,6 +32,10 @@
                                     {% for inst in instances %}
                                         <a href="{% url 'instance' inst.compute.id inst %}">{{ inst }}</a></br>
                                     {% endfor %}
+                                </td>
+                                <td><a href="{% url 'powerGroup' group.id %}" class="btn btn-sm btn-default" type="button">
+                                        <span class="glyphicon glyphicon-play"></span>
+                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}

@@ -1,9 +1,13 @@
 {% load i18n %}
 {% if request.user.is_superuser %}
-    <a href="#AddGroup" type="button" class="btn btn-success pull-right" data-toggle="modal">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </a>
-
+    <div class="pull-right">
+        <a href="{% url 'powerGroup' group_id %}" type="button" class="btn btn-success" data-toggle="modal">
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+        </a>
+        <a href="#AddGroup" type="button" class="btn btn-success" data-toggle="modal">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+    </div>
     <!-- Modal pool -->
     <div class="modal fade" id="AddGroup" tabindex="-1" role="dialog" aria-labelledby="AddGroupLabel" aria-hidden="true">
         <div class="modal-dialog">
